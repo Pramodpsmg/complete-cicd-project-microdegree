@@ -144,19 +144,32 @@ You can follow same procedure in the official  AWS document [Getting started wit
    --zones <AZ-1>,<AZ-2>
    
    example:
+   vi eks.sh
+   
    eksctl create cluster --name microdegree \
    --region us-east-1 \
    --node-type t2.small \
     ```
-   
+  to run that eks background 
+   nohup sh eks.sh &
+
+  to view the background jobs
+  jobs -l
+
+  to see process 
+  tail -f nohup.out
+
+  or
+
+  cat nohup.out
 
 
-6. To delete the EKS clsuter 
+7. To delete the EKS clsuter 
    ```sh 
    eksctl delete cluster microdegree --region us-east-1 
    ```
    
-7. Validate your cluster using by creating by checking nodes and by creating a pod 
+8. Validate your cluster using by creating by checking nodes and by creating a pod 
    ```sh 
    kubectl get nodes
    kubectl run tomcat --image=tomcat 
@@ -183,6 +196,12 @@ You can follow same procedure in the official  AWS document [Getting started wit
 
 ```commandline
 adduser sonarqube
+
+add password
+
+su - sonarqube
+
+
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
 unzip *
 chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
