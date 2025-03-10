@@ -604,7 +604,8 @@ Pipeline: Stage View
 ```
 ## credential setups
 ![img_2.png](img_2.png)
-
+all are secret text
+for docker hub use username and password of your docker hub
 
 # Installing argocd
 
