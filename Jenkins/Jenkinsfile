@@ -4,11 +4,11 @@ pipeline {
     environment {
         // Parametrizing the environment variables
         DOCKER_TAG = "${BUILD_NUMBER}"
-        IMAGE_NAME = "manojkrishnappa/fullstack"
-        AWS_REGION = "us-east-1"
-        SONAR_URL = 'http://3.84.96.251:9000/'  // SonarQube URL
+        IMAGE_NAME = "pramodprasanna/fullstack"
+        AWS_REGION = "ca-central-1"
+        SONAR_URL = 'http://3.99.219.85:9000/'  // SonarQube URL
         GIT_REPO_NAME = "complete-cicd-project-microdegree"
-        GIT_USER_NAME = "ManojKRISHNAPPA"
+        GIT_USER_NAME = "Pramodpsmg"
     }
 
     tools {
@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ManojKRISHNAPPA/complete-cicd-project-microdegree.git'
+                git branch: 'main', url: 'https://github.com/Pramodpsmg/complete-cicd-project-microdegree.git'
             }
         }
 
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Static Code Analysis (SonarQube)') {
             steps {
-                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                withCredentials([string(credentialsId: 'sonarqube-id', variable: 'SONAR_AUTH_TOKEN')]) {
                     sh "mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}"
                 }
             }
@@ -67,13 +67,13 @@ pipeline {
 
         stage('Update Deployment File') {
             steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'github-1', variable: 'GITHUB_TOKEN')]) {
                     sh '''
-                        git config user.email "contactmanojmech@gmail.com"
+                        git config user.email "pramodprasanna17@gmail.com"
                         git config user.name "${GIT_USER_NAME}"
 
                         # Update deployment.yml with the correct Docker image version (Build Number)
-                        sed -i "s|image: manojkrishnappa/fullstack:[^ ]*|image: manojkrishnappa/fullstack:${DOCKER_TAG}|g" argocd-manifest/deployment.yml
+                        sed -i "s|image: pramodprasanna/fullstack:[^ ]*|image: pramodprasanna/fullstack:${DOCKER_TAG}|g" argocd-manifest/deployment.yml
 
                         # Commit and push the updated deployment file
                         git add argocd-manifest/deployment.yml
@@ -110,9 +110,9 @@ pipeline {
                 emailext (
                     subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}",
                     body: body,
-                    to: 'manojdevopstest@gmail.com',
-                    from: 'contactmanojmech@gmail.com',
-                    replyTo: 'contactmanojmech@gmail.com',
+                    to: 'pramodasmg@gmail.com',
+                    from: 'pramodprasanna17@gmail.com',
+                    replyTo: 'pramodprasanna17@gmail.com',
                     mimeType: 'text/html',
                     attachmentsPattern: '**/target/sonar-report.html'  // Path to the SonarQube report file
                 )
