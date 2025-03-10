@@ -150,13 +150,13 @@ You can follow same procedure in the official  AWS document [Getting started wit
    --region us-east-1 \
    --node-type t2.small \
     ```
-  to run that eks background 
+  to run that eks background --
    nohup sh eks.sh &
 
-  to view the background jobs
+  to view the background jobs --
   jobs -l
 
-  to see process 
+  to see process --
   tail -f nohup.out
 
   or
